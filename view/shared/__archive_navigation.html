@@ -1,0 +1,44 @@
+<?
+$archive_nav =array();
+$years = array();
+$allmonths = array();
+if($active->primval != $root->primval){
+  $current_year = date("Y", strtotime($active->date_start));
+  $current_month = date("F", strtotime($active->date_start));
+}else{
+  $current_year = date("Y");
+  $current_month = date("F");
+}
+
+$content = $root->children;
+if($content){
+  foreach($content->scope("live")->order("date_start DESC")->all() as $page){
+    list($year, $month, $day) = explode("/",date("Y/F/d", strtotime($page->date_start)));
+    $years[$year] = 1;
+    $allmonths[] = $month;
+    $archive_nav[$year][$month][] = $page;
+  }
+}
+?>
+<?if($content && $content->count()):?>
+<ul class='nav archive_nav'>
+  <?foreach($archive_nav as $year=>$months):?>
+    <?$i = $m = $y = 0;?>
+    <?if(count($years) > 1):?>
+      <li class='has_children year item item-<?=$y?><?=(($year == $current_year) ? " in_stack" : "")?>'><a href="#" class='top year'><?=$year?></a><ul class='nav'>
+      <?$m++; $i++;?>      
+    <?endif?>
+    <?$i++;?>
+    <?foreach($months as $mn=>$news):?>  
+      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month'><?=strtoupper($mn)?></a><ul class='nav'>
+      <?foreach($news as $pg):?>
+      <li class='item item-<?=$i?>'><a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'><?=$pg->title?></a></li>
+      <?endforeach?>
+      </ul></li>
+    <?endforeach?>
+    <?if(count($years) > 1):?>
+      </ul></li>
+    <?endif?>
+  <?endforeach?>  
+</ul>
+<?endif?>
