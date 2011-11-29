@@ -6,3 +6,10 @@ root is the top you want this nav to start at (so say the news section)
 
 active is the current page (so a news story)
 
+Basic styling is also included:
+
+<?=css_bundle("wildfire.archive-navigation", array(), "wildfire.archive-navigation")?>
+
+Along with js to make them slide up and down: 
+
+<?=js_bundle("wildfire.archive-navigation", array(), "wildfire.archive-navigation")?>
