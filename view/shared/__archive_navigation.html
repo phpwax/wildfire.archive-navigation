@@ -40,7 +40,7 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
       <?foreach($news as $pg):?>
         <li class='item item-<?=$i?>'>
           <a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'>
-            <?=sprintf($item_format, $pg->title, $pg->permalink, $mn, date("Y",$pg->date_start),date("F",$pg->date_start), date("d",$pg->date_start)))?>
+            <?=sprintf($item_format, $pg->title, $pg->permalink, $mn, date("Y",$pg->date_start),date("F",$pg->date_start), date("d",$pg->date_start))?>
           </a>
         </li>
       <?endforeach?>
