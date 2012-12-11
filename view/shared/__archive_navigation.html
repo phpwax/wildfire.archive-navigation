@@ -19,6 +19,8 @@ if($content){
     $archive_nav[$year][$month][] = $page;
   }
 }
+
+if(!$item_format) $item_format = "<span class='title'>%s</span>";
 ?>
 <?if($content && $content->count()):?>
 <ul class='nav archive_nav'>
@@ -36,7 +38,11 @@ if($content){
     <?foreach($months as $mn=>$news):?>  
       <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><span class='named'><?=($mn)?></span> <span class='counter'>(<?=count($news)?>)</span></a><ul class='nav'>
       <?foreach($news as $pg):?>
-      <li class='item item-<?=$i?>'><a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'><?=$pg->title?></a></li>
+        <li class='item item-<?=$i?>'>
+          <a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'>
+            <?=sprintf($item_format, $pg->title, $pg->permalink, $mn, date("Y",$pg->date_start),date("F",$pg->date_start, date("d",$pg->date_start)))?>
+          </a>
+        </li>
       <?endforeach?>
       </ul></li>
     <?endforeach?>
