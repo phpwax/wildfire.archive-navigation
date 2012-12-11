@@ -43,10 +43,11 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
             <?=sprintf($item_format, 
               $pg->title, 
               $pg->permalink, 
-              $mn, date("Y",$pg->date_start),
-              date("F",$pg->date_start), 
-              date("j",$pg->date_start),
-              date("l",$pg->date_start)
+              $mn, 
+              date("Y",strtotime($pg->date_start)),
+              date("F",strtotime($pg->date_start)), 
+              date("j",strtotime($pg->date_start)),
+              date("l",strtotime($pg->date_start))
             )?>
           </a>
         </li>
