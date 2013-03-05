@@ -11,4 +11,5 @@ jQuery(document).ready(function(){
     jQuery(this).parent().children("ul.nav:eq(0)").slideToggle();    
   });
   
+  jQuery(".archive_nav li:not(.in_stack) a.year, .archive_nav li:not(.in_stack) a.month").trigger("click");
 });
