@@ -27,7 +27,7 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
 <ul class='nav archive_nav'>
   <?foreach($archive_nav as $year=>$months):?>
     <?$i = $m = $y = 0;?>
-    <?if(count($years) > 1):?>
+    <?if(count($years) > 1 || $force_year_display):?>
       <?
       $ycount = 0;
       foreach($months as $mn=>$news) $ycount += count($news);
