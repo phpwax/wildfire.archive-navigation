@@ -1,10 +1,11 @@
 <?
+if(!$date_field) $date_field = "date_start";
 $archive_nav =array();
 $years = array();
 $allmonths = array();
 if($active->primval != $root->primval){
-  $current_year = date("Y", strtotime($active->date_start));
-  $current_month = date("F", strtotime($active->date_start));
+  $current_year = date("Y", strtotime($active->$date_field));
+  $current_month = date("F", strtotime($active->$date_field));
 }else{
   $current_year = date("Y");
   $current_month = date("F");
@@ -12,8 +13,8 @@ if($active->primval != $root->primval){
 
 $content = $root->children;
 if($content){
-  foreach($content->scope("live")->order("date_start DESC")->all() as $page){
-    list($year, $month, $day) = explode("/",date("Y/F/d", strtotime($page->date_start)));
+  foreach($content->scope("live")->order("$date_field DESC")->all() as $page){
+    list($year, $month, $day) = explode("/",date("Y/F/d", strtotime($page->$date_field)));
     $years[$year] = 1;
     $allmonths[] = $month;
     $archive_nav[$year][$month][] = $page;
