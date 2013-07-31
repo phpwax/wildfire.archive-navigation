@@ -21,6 +21,8 @@ if($content){
   }
 }
 
+if(!$year_format) $year_format = "<span class='named'>%s</span> <span class='counter'>(%s)</span>";
+if(!$month_format) $month_format = "<span class='named'>%s</span> <span class='counter'>(%s)</span>";
 if(!$item_format) $item_format = "<span class='title'>%s</span>";
 ?>
 <?if($content && $content->count()):?>
@@ -32,12 +34,12 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
       $ycount = 0;
       foreach($months as $mn=>$news) $ycount += count($news);
       ?>
-      <li class='has_children year item item-<?=$y?><?=(($year == $current_year) ? " in_stack" : "")?>'><a href="#" class='top year clearfix'><span class='named'><?=$year?></span> <span class='counter'>(<?=$ycount?>)</span></a><ul class='nav'>
+      <li class='has_children year item item-<?=$y?><?=(($year == $current_year) ? " in_stack" : "")?>'><a href="#" class='top year clearfix'><?=sprintf($year_format, $year, $ycount)?></a><ul class='nav'>
       <?$m++; $i++;?>      
     <?endif?>
     <?$i++;?>
     <?foreach($months as $mn=>$news):?>  
-      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><span class='named'><?=($mn)?></span> <span class='counter'>(<?=count($news)?>)</span></a><ul class='nav'>
+      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><?=sprintf($month_format, $mn, count($news))?></a><ul class='nav'>
       <?foreach($news as $pg):?>
         <li class='item item-<?=$i?>'>
           <a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'>
