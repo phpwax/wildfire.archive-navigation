@@ -39,7 +39,7 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
     <?endif?>
     <?$i++;?>
     <?foreach($months as $mn=>$news):?>  
-      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><?=sprintf($month_format, $mn, count($news))?></a><ul class='nav'>
+      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><?=sprintf($month_format, $mn, count($news), $year)?></a><ul class='nav'>
       <?foreach($news as $pg):?>
         <li class='item item-<?=$i?>'>
           <a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'>
