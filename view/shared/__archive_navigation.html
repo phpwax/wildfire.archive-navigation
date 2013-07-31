@@ -22,7 +22,7 @@ if($content){
 }
 
 if(!$year_format) $year_format = "<span class='named'>%s</span> <span class='counter'>(%s)</span>";
-if(!$month_format) $month_format = "<span class='named'>%s</span> <span class='counter'>(%s)</span>";
+if(!$month_format) $month_format = "<span class='named'>%s %s</span> <span class='counter'>(%s)</span>";
 if(!$item_format) $item_format = "<span class='title'>%s</span>";
 ?>
 <?if($content && $content->count()):?>
@@ -34,24 +34,43 @@ if(!$item_format) $item_format = "<span class='title'>%s</span>";
       $ycount = 0;
       foreach($months as $mn=>$news) $ycount += count($news);
       ?>
-      <li class='has_children year item item-<?=$y?><?=(($year == $current_year) ? " in_stack" : "")?>'><a href="#" class='top year clearfix'><?=sprintf($year_format, $year, $ycount)?></a><ul class='nav'>
+      <li class='has_children year item item-<?=$y?><?=(($year == $current_year) ? " in_stack" : "")?>'><a href="#" class='top year clearfix'>
+        <?=$year_partial ?
+          partial($year_partial, array(
+            "year"=>$year,
+            "count"=>$ycount)) :
+          sprintf($year_format,
+            $year,
+            $ycount)?>
+      </a><ul class='nav'>
       <?$m++; $i++;?>      
     <?endif?>
     <?$i++;?>
     <?foreach($months as $mn=>$news):?>  
-      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'><?=sprintf($month_format, $mn, count($news), $year)?></a><ul class='nav'>
+      <li class='month has_children item item-<?=$m?><?=(($current_year == $year && $current_month == $mn) ? " in_stack": "")?>'><a href='#' class='top month clearfix'>
+      <?=$month_partial ?
+        partial($month_partial, array(
+          "month"=>$mn,
+          "year"=>$year,
+          "count"=>count($news))) :
+        sprintf($month_format, $mn, count($news), $year)?>
+      </a><ul class='nav'>
       <?foreach($news as $pg):?>
         <li class='item item-<?=$i?>'>
           <a href='<?=$pg->permalink?>' class='top news_item<?=(($pg->primval == $active->primval)? " active_item": "")?>'>
-            <?=sprintf($item_format, 
-              $pg->title, 
-              $pg->permalink, 
-              $mn, 
-              date("Y",strtotime($pg->date_start)),
-              date("F",strtotime($pg->date_start)), 
-              date("j",strtotime($pg->date_start)),
-              date("l",strtotime($pg->date_start))
-            )?>
+            <?=$item_partial ?
+              partial($item_partial, array(
+                "title" => $pg->title, 
+                "permalink" => $pg->permalink, 
+                "date" => $pg->date_start)) :
+              sprintf($item_format,
+                $pg->title,
+                $pg->permalink,
+                $mn,
+                date("Y",strtotime($pg->date_start)),
+                date("F",strtotime($pg->date_start)),
+                date("j",strtotime($pg->date_start)),
+                date("l",strtotime($pg->date_start)))?>
           </a>
         </li>
       <?endforeach?>
