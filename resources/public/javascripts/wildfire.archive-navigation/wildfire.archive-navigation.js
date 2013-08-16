@@ -9,5 +9,4 @@ jQuery(document).ready(function(){
     e.preventDefault();
   });
   
-  jQuery(".archive_nav li:not(.in_stack) a.year, .archive_nav li:not(.in_stack) a.month").trigger("click");
 });
